@@ -15,6 +15,6 @@ CREATE TABLE `fsrv_file_revision` (
   `metadata_id` int(11) unsigned NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `file_id` (`file_id`),
-  CONSTRAINT `fsrv_file_revision_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `fsrv_file_metadata` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `metadata_id` (`metadata_id`),
+  CONSTRAINT `fsrv_file_revision_ibfk_1` FOREIGN KEY (`metadata_id`) REFERENCES `fsrv_file_metadata` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
