@@ -12,7 +12,7 @@ CREATE TABLE `fsrv_file_metadata` (
 
 CREATE TABLE `fsrv_file_revision` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `file_id` int(11) unsigned NOT NULL,
+  `metadata_id` int(11) unsigned NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `file_id` (`file_id`),
