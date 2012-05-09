@@ -6,6 +6,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<build>
+	  <finalName>Earte_FileServer</finalName>
+	</build>
+
 	<repositories>
 		<repository>
 			<id>download-java-net</id>
@@ -55,11 +59,6 @@
 			<version>0.9.1.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.1rc2</version>
-		</dependency>
 	</dependencies>
 
 
