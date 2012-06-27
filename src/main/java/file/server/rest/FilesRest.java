@@ -58,6 +58,7 @@ public class FilesRest {
 			@FormDataParam("file") FormDataContentDisposition fileDetail,
 			@FormDataParam("file") FormDataBodyPart bodyPart,
 			@FormDataParam("path") String path,
+			@FormDataParam("draft") @DefaultValue("false") Boolean draft,
 			@FormDataParam("overwrite") @DefaultValue("true") Boolean overwrite
 			) throws Exception {
 
@@ -68,7 +69,7 @@ public class FilesRest {
 			fMeta.setName(fileDetail.getFileName());
 			fMeta.setPath(path);
 
-			fMeta = fileService.upload(file,fMeta,overwrite);
+			fMeta = fileService.upload(file,fMeta,draft,overwrite);
 			
 			return Response.ok(fMeta).build();
 		

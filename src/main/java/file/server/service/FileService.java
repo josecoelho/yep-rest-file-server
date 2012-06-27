@@ -1,5 +1,8 @@
 package file.server.service;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,6 +11,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.Thumbnails.Builder;
+import net.coobird.thumbnailator.filters.Caption;
+import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.geometry.Positions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +26,10 @@ import com.sun.jersey.api.NotFoundException;
 
 import file.server.model.bean.Metadata;
 import file.server.model.bean.Revision;
+import file.server.model.bean.UserPathPermission;
 import file.server.model.dao.MetadataDAO;
 import file.server.model.dao.RevisionDAO;
+import file.server.model.dao.UserPathPermissionDAO;
 
 @Service
 public class FileService {
@@ -26,6 +39,12 @@ public class FileService {
 
 	@Autowired
 	private RevisionDAO revisionDAO;
+	
+	@Autowired
+	private UserPathPermissionDAO userPathPermissionDAO;
+	
+	
+	private static List<String> canPutWatermark;
 
 	/**
 	 * Upload file, if this file already exists and overwrite is true, then a
@@ -33,9 +52,10 @@ public class FileService {
 	 * 
 	 * @param file
 	 * @param metadata
+	 * @param overwrite2 
 	 * @return
 	 */
-	public Metadata upload(InputStream file, Metadata metadata, boolean overwrite)
+	public Metadata upload(InputStream file, Metadata metadata, boolean draft,  boolean overwrite)
 			throws Exception {
 
 		Metadata existsMeta = metadataDAO.findByPathAndName(metadata.getPath(),
@@ -58,14 +78,46 @@ public class FileService {
 			// nothing to do
 			throw new FileNotFoundException();
 		}
-
+		
+		
 		// save file
 		String pathToSaveFile = GedFileUtil.getPathById(metadata.getCurrentRevision());
+		File fileToSave = new File(pathToSaveFile);
+		writeToFile(file, fileToSave);
 		
-		writeToFile(file, new File(pathToSaveFile));
+		if(draft && canPutWaterMark(metadata)) {
+			putWaterMark(fileToSave,metadata);
+		}
 
 		return metadata;
 
+	}
+
+	private void putWaterMark(File file,Metadata metadata) throws IOException {
+		
+		BufferedImage bufferedImage = ImageIO.read(file);
+		
+		// Set up the caption properties
+		String caption = "RASCUNHO";
+		Font font = new Font("Monospaced", Font.PLAIN, 100);
+		Color c = Color.GRAY;
+		float opacity = 0.6f;
+		Position[] positions = {Positions.TOP_LEFT,Positions.CENTER,Positions.BOTTOM_RIGHT};
+		int insetPixels = 0;
+
+		// Apply caption to the image
+		Builder<BufferedImage> builder = Thumbnails.of(bufferedImage).size(bufferedImage.getHeight(),bufferedImage.getWidth()).outputFormat(metadata.getFileExtension());
+		
+		for(Position position: positions) {
+			builder.addFilter(new Caption(caption, font, c, opacity, position, insetPixels));
+		}
+		BufferedImage result = builder.asBufferedImage();
+		
+		ImageIO.write(result, metadata.getFileExtension(), file);
+	}
+
+	private boolean canPutWaterMark(Metadata metadata) {
+		return metadata.getMimeType().startsWith("image/");
 	}
 
 	/**
@@ -138,6 +190,21 @@ public class FileService {
 
 	public List<Metadata> loadByPath(String path) throws Exception {
 		return metadataDAO.findByPath(path);
+	}
+	
+	public UserPathPermission share(long userId, String path,boolean read, boolean write) throws Exception {
+		
+		UserPathPermission perm = userPathPermissionDAO.findByUserAndPath(userId, path);
+		if(perm != null) {
+			perm.setRead(read);
+			perm.setWrite(write);
+		} else {
+			perm = new UserPathPermission(userId,path,read,write);
+		}
+		
+		userPathPermissionDAO.save(perm);
+		
+		return perm;
 	}
 	
 

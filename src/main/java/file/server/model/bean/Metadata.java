@@ -124,4 +124,8 @@ public class Metadata implements DBObj {
 	public void setCurrentRevision(long currentRevision) {
 		this.currentRevision = currentRevision;
 	}
+
+	public String getFileExtension() {
+		return name.substring(name.lastIndexOf('.')+1);
+	}
 }
