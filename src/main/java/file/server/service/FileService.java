@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.naming.NoPermissionException;
+import javax.ws.rs.WebApplicationException;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
@@ -29,6 +31,7 @@ import file.server.model.bean.Revision;
 import file.server.model.bean.UserPathPermission;
 import file.server.model.dao.MetadataDAO;
 import file.server.model.dao.RevisionDAO;
+import file.server.model.dao.SessionDao;
 import file.server.model.dao.UserPathPermissionDAO;
 
 @Service
@@ -43,9 +46,20 @@ public class FileService {
 	@Autowired
 	private UserPathPermissionDAO userPathPermissionDAO;
 	
+	@Autowired
+	private SessionDao sessionDao;
 	
 	private static List<String> canPutWatermark;
 
+	
+	public void validateSession(String sid) throws Exception {
+		
+		if(!sessionDao.validateSession(sid)) {
+			throw new WebApplicationException(403);
+		}
+		
+	}
+	
 	/**
 	 * Upload file, if this file already exists and overwrite is true, then a
 	 * new revision of file will be generated

@@ -42,7 +42,7 @@
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>file.server.rest</param-value>
+			<param-value>file.server.rest;org.codehaus.jackson.jaxrs</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

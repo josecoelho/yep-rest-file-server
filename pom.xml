@@ -25,6 +25,7 @@
 			<artifactId>jersey-spring</artifactId>
 			<version>1.12</version>
 		</dependency>
+	
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
@@ -64,7 +65,8 @@
 		  <artifactId>thumbnailator</artifactId>
 		  <version>0.4.2</version>
 		</dependency>
-
+		
+	
 	</dependencies>
 
 

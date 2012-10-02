@@ -4,6 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,9 +27,13 @@ public class RevisionsRest {
 	
 	@GET
 	@Path("/{id}")
-	public Response gett(@PathParam("id") Long id) {
+	public Response gett(
+			@QueryParam("sid") String sid,
+			@PathParam("id") Long id) {
 		
 		try {
+			fileService.validateSession(sid);
+			
 			Metadata metadata = fileService.getRevisions(id);
 			
 			if(metadata == null) {
