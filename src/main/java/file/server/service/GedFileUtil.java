@@ -1,5 +1,14 @@
 package file.server.service;
 
+
+/**
+ * Atenção: Por padrão o caminho para os arquivos é o home do usuário /files.
+ *
+ * 
+ * 
+ * @author josecoelho
+ *
+ */
 public class GedFileUtil {
 
 	/**
@@ -31,7 +40,7 @@ public class GedFileUtil {
         		+ "/"  + String.format("%03d", nivel_4_int) 
         		+ "/" + String.format("%010d", id);
        
-		return path;
+		return System.getProperty("user.home")+"/files/"+path;
 	}
 	
 }

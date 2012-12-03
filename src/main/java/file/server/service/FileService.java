@@ -8,12 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.naming.NoPermissionException;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
@@ -21,6 +20,10 @@ import net.coobird.thumbnailator.filters.Caption;
 import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +45,8 @@ public class FileService {
 
 	@Autowired
 	private RevisionDAO revisionDAO;
+	
+	private Log log = LogFactory.getLog(FileService.class);
 	
 	@Autowired
 	private UserPathPermissionDAO userPathPermissionDAO;
@@ -179,25 +184,18 @@ public class FileService {
 	}
 	
 	
-	private void writeToFile(InputStream uploadedInputStream,
-			File uploadedFileLocation) {
-
+	private void writeToFile(InputStream uploadedInputStream,	File uploadedFileLocation) {
+		
 		try {
-			uploadedFileLocation.getParentFile().mkdirs();
 			
-			OutputStream out = new FileOutputStream(uploadedFileLocation);
-			int read = 0;
-			byte[] bytes = new byte[1024];
-
-			out = new FileOutputStream(uploadedFileLocation);
-			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
-			}
-			out.flush();
-			out.close();
+			uploadedFileLocation.getParentFile().mkdirs();
+			IOUtils.copy(uploadedInputStream, FileUtils.openOutputStream(uploadedFileLocation));
+			
+			
 		} catch (IOException e) {
-
-			e.printStackTrace();
+			String msg = String.format("Can't write file to %s.",uploadedFileLocation.getAbsolutePath());
+			log.error(msg,e);
+			throw new WebApplicationException(e, Status.INTERNAL_SERVER_ERROR);
 		}
 
 	}
