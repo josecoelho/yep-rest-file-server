@@ -25,9 +25,7 @@ public class PathRest {
 	private FileService fileService;
 
 	@GET
-	public Response gett(@QueryParam("sid") String sid,
-			@QueryParam("path") String path) throws Exception {
-		fileService.validateSession(sid);
+	public Response gett(@QueryParam("path") String path) throws Exception {
 		
 		
 		List<Metadata> list = fileService.loadByPath(path);

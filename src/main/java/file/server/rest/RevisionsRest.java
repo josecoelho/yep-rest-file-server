@@ -28,12 +28,9 @@ public class RevisionsRest {
 	@GET
 	@Path("/{id}")
 	public Response gett(
-			@QueryParam("sid") String sid,
 			@PathParam("id") Long id) {
 		
 		try {
-			fileService.validateSession(sid);
-			
 			Metadata metadata = fileService.getRevisions(id);
 			
 			if(metadata == null) {

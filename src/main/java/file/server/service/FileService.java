@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -31,11 +30,8 @@ import com.sun.jersey.api.NotFoundException;
 
 import file.server.model.bean.Metadata;
 import file.server.model.bean.Revision;
-import file.server.model.bean.UserPathPermission;
 import file.server.model.dao.MetadataDAO;
 import file.server.model.dao.RevisionDAO;
-import file.server.model.dao.SessionDao;
-import file.server.model.dao.UserPathPermissionDAO;
 
 @Service
 public class FileService {
@@ -48,22 +44,8 @@ public class FileService {
 	
 	private Log log = LogFactory.getLog(FileService.class);
 	
-	@Autowired
-	private UserPathPermissionDAO userPathPermissionDAO;
-	
-	@Autowired
-	private SessionDao sessionDao;
-	
 	private static List<String> canPutWatermark;
 
-	
-	public void validateSession(String sid) throws Exception {
-		
-		if(!sessionDao.validateSession(sid)) {
-			throw new WebApplicationException(403);
-		}
-		
-	}
 	
 	/**
 	 * Upload file, if this file already exists and overwrite is true, then a
@@ -204,20 +186,4 @@ public class FileService {
 		return metadataDAO.findByPath(path);
 	}
 	
-	public UserPathPermission share(long userId, String path,boolean read, boolean write) throws Exception {
-		
-		UserPathPermission perm = userPathPermissionDAO.findByUserAndPath(userId, path);
-		if(perm != null) {
-			perm.setRead(read);
-			perm.setWrite(write);
-		} else {
-			perm = new UserPathPermission(userId,path,read,write);
-		}
-		
-		userPathPermissionDAO.save(perm);
-		
-		return perm;
-	}
-	
-
 }

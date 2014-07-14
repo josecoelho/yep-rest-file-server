@@ -19,12 +19,3 @@ CREATE TABLE `fsrv_file_revision` (
   CONSTRAINT `fsrv_file_revision_ibfk_1` FOREIGN KEY (`metadata_id`) REFERENCES `fsrv_file_metadata` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `fsrv_user_path_permission` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,	
-  `user_id` int(11) NOT NULL,
-  `path` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `owner` tinyint(1) DEFAULT '0' NOT NULL,
-  `read` tinyint(1) DEFAULT '0' NOT NULL,
-  `write` tinyint(1) DEFAULT '0' NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
