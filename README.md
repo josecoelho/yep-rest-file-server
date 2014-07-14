@@ -22,7 +22,7 @@ To run this project as is, you will need to setup:
 - SGBD Mysql 5+
 - Servlet Container - TOMCAT 6 (or another)
 
-## Setup 
+## Setup
 
 - Import schema.sql to your database
 - Do deploy of .war to your tomcat
@@ -30,7 +30,7 @@ To run this project as is, you will need to setup:
 # APIs Doc
 
 ## Returning errors
-All failed requisitions will have your equivalent HTTP Response Code, and on the body a JSON explaing the problem. 
+All failed requisitions will have your equivalent HTTP Response Code, and on the body a JSON explaing the problem.
 
 * 400: Invalid parameters. More details on body as JSON
 * 404: File or path not found
@@ -109,7 +109,7 @@ File metadata and the list of revisions.
 
 ```
 {
-  “metadata”: 
+  “metadata”:
 {
     "id":"0",
     "isDir":"false",
@@ -183,11 +183,11 @@ none
 # DEVELOPMENT
 
 
-## Requirements 
+## Requirements
 
 - JAVA 6+ SDK
 - Eclipse (http://eclipse.org)
--- I'm using the plugin m2eclipse (http://maven.apache.org/eclipse-plugin.html) 
+-- I'm using the plugin m2eclipse (http://maven.apache.org/eclipse-plugin.html)
 (If you want to user another IDE, be free to do that. :) But all my instructions are to run on Eclipse... )
 
 
