@@ -41,7 +41,7 @@ All failed requisitions will have your equivalent HTTP Response Code, and on the
 Donwload a file.
 
 ### URL structure
-http://<base_path>/files/{id}
+http://base_path/files/{id}
 *{id}* is the id of file
 ### Method
 GET
@@ -58,7 +58,7 @@ The file with defined id
 Upload a file or a new revision of file
 
 ### URL structure
-http://<base_path>/files/
+http://base_path/files/
 ### Method
 POST
 ### Version
@@ -92,7 +92,7 @@ All file metadata.
 Return the metadata from all file revisions
 
 ### URL structure
-http://<base_path>/revisions/{id}
+http://base_path/revisions/{id}
 *{id}* is the id of file
 ### Method
 GET
@@ -138,7 +138,7 @@ File metadata and the list of revisions.
 Return the metadata from all files on the specified path
 
 ### URL structure
-http://<base_path>/paths
+http://base_path/paths
 
 ### Method
 GET
