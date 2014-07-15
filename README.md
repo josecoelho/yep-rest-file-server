@@ -224,6 +224,6 @@ none
 
 ## How to generate the fucking WAR?
 
-* Change the config of the database to our production server on src/main/webapp/WEB-INF/config/db.xml (I know, its not the best approach... sorry about that)
+* Change the config of the database to your production server on src/main/webapp/WEB-INF/config/db.xml (I know, its not the best approach... sorry about that)
 * On eclipse, click with the right button of yout mouse on the project and select the option Export -> WAR File
 * NNF on the wizard and be happy!
