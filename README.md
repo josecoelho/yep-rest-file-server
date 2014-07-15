@@ -18,14 +18,14 @@ Its simple, but usefull if you want to move your storage to another place. I kno
 
 To run this project as is, you will need to setup:
 
-- JVM Java 6+
-- SGBD Mysql 5+
-- Servlet Container - TOMCAT 6 (or another)
+* JVM Java 6+
+* SGBD Mysql 5+
+* Servlet Container - TOMCAT 6 (or another)
 
 ## Setup
 
-- Import schema.sql to your database
-- Do deploy of .war to your tomcat
+* Import schema.sql to your database
+* Do deploy of .war to your tomcat
 
 # APIs Doc
 
@@ -185,9 +185,9 @@ none
 
 ## Requirements
 
-- JAVA 6+ SDK
-- Eclipse (http://eclipse.org)
--- I'm using the plugin m2eclipse (http://maven.apache.org/eclipse-plugin.html)
+* JAVA 6+ SDK
+* Eclipse (http://eclipse.org)
+** I'm using the plugin m2eclipse (http://maven.apache.org/eclipse-plugin.html)
 (If you want to user another IDE, be free to do that. :) But all my instructions are to run on Eclipse... )
 
 
@@ -208,19 +208,19 @@ none
 * Jersey (jersey.java.net) RESTFUL API
 * Spring - For IC and Configurations
 
-## Talking about the dir structure
+## Talking about the directory structure
 
-src/main/java - Java classes
-src/main/config - configuration files (log4j)
-src/main/webapp - Sprint and ServletContainer configuration files
+* src/main/java - Java classes
+* src/main/config - configuration files (log4j)
+* src/main/webapp - Sprint and ServletContainer configuration files
 
-## Talking about the packages of the project
+## Talking about packages of the project
 
-file.server.model.bean - the beans of the project, every class that load data
-file.server.model.dao - class to manage beans on database
-file.server.rest - "servlets" jersey, represents the communication with external clients
-file.server.service - service classes, the link between rest and dao, here I put all bussiness logical
-file.server.util - util classes
+* file.server.model.bean - the beans of the project, every class that load data
+* file.server.model.dao - class to manage beans on database
+* file.server.rest - "servlets" jersey, represents the communication with external clients
+* file.server.service - service classes, the link between rest and dao, here I put all bussiness logical
+* file.server.util - util classes
 
 ## How to generate the fucking WAR?
 
